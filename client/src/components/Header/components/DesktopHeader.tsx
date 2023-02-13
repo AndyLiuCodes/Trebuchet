@@ -3,12 +3,19 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import AdbIcon from '@mui/icons-material/Adb';
 import * as Constants from '@/constants/text';
-import { MenuProp } from '@/features/header/types/Menu';
-import { useHeaderNav } from '@/features/header/hooks/HeaderProvider';
-import { StateProviderContext } from '@/features/header/provider/HeaderProvider';
+import { MenuProp } from '@/components/Header/types/Menu';
+import { useHeaderNav } from '@/components/Header/hooks/HeaderProvider';
+import { StateProviderContext } from '@/components/Header/providers/Header';
+import { useNavigate } from 'react-router-dom';
 
 export const DesktopHeader = ({ pages }: MenuProp) => {
   const { handleCloseNavMenu }: StateProviderContext = useHeaderNav();
+  const navigate = useNavigate();
+
+  const onNavMenuClick = (route: string) => {
+    handleCloseNavMenu();
+    navigate(route);
+  };
 
   return (
     <>
@@ -38,11 +45,13 @@ export const DesktopHeader = ({ pages }: MenuProp) => {
       >
         {pages.map((page) => (
           <Button
-            key={page}
-            onClick={handleCloseNavMenu}
+            key={page.name}
+            onClick={() => {
+              onNavMenuClick(page.route);
+            }}
             sx={{ my: 2, color: 'white', display: 'block' }}
           >
-            {page}
+            {page.name}
           </Button>
         ))}
       </Box>
