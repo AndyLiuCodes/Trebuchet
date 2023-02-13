@@ -1,6 +1,6 @@
 import { MobileNavMenu } from './MobileNavMenu';
 import AdbIcon from '@mui/icons-material/Adb';
-import { MenuProp } from '@/features/header/types/Menu';
+import { MenuProp } from '@/components/Header/types/Menu';
 import { Box } from '@mui/material';
 
 export const MobileHeader = ({ pages }: MenuProp) => {

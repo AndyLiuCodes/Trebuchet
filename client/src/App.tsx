@@ -1,13 +1,8 @@
-import { useState } from "react";
-import { Header } from "@/features/header/";
-import "./App.css";
+import { RouterProvider } from 'react-router-dom';
+import { AppRouter } from '@/routes';
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-    </div>
-  );
+  return <RouterProvider router={AppRouter} />;
 }
 
 export default App;

@@ -3,7 +3,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import { MobileHeader } from './MobileHeader';
 import { DesktopHeader } from './DesktopHeader';
-import { HeaderProvider } from '@/features/header/provider/HeaderProvider';
+import { HeaderProvider } from '@/components/Header/providers/Header';
 import * as PagesConstant from '@/constants/pages';
 
 export const Header = () => {

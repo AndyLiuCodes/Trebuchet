@@ -1,8 +1,10 @@
 import { IconButton, Menu, MenuItem, Typography, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { MenuProp } from '@/features/header/types/Menu';
-import { useHeaderNav } from '@/features/header/hooks/HeaderProvider';
-import { StateProviderContext } from '@/features/header/provider/HeaderProvider';
+import { MenuProp } from '@/components/Header/types/Menu';
+import { useHeaderNav } from '@/components/Header/hooks/HeaderProvider';
+import { StateProviderContext } from '@/components/Header/providers/Header';
+import { Page } from '@/components/Header/types/Menu';
+import { useNavigate } from 'react-router-dom';
 
 export const MobileNavMenu = ({ pages }: MenuProp) => {
   const {
@@ -10,10 +12,11 @@ export const MobileNavMenu = ({ pages }: MenuProp) => {
     handleOpenNavMenu,
     handleCloseNavMenu,
   }: StateProviderContext = useHeaderNav();
+  const navigate = useNavigate();
 
-  const onNavMenuClick = (page: string) => {
-    // handle routing
+  const onNavMenuClick = (route: string) => {
     handleCloseNavMenu();
+    navigate(route);
   };
 
   return (
@@ -53,14 +56,14 @@ export const MobileNavMenu = ({ pages }: MenuProp) => {
           display: { xs: 'block', md: 'none' },
         }}
       >
-        {pages.map((page: string) => (
+        {pages.map((page: Page) => (
           <MenuItem
-            key={page}
+            key={page.name}
             onClick={() => {
-              onNavMenuClick(page);
+              onNavMenuClick(page.route);
             }}
           >
-            <Typography textAlign='center'>{page}</Typography>
+            <Typography textAlign='center'>{page.name}</Typography>
           </MenuItem>
         ))}
       </Menu>

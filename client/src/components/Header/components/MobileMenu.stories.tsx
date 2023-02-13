@@ -1,5 +1,6 @@
 import { MobileNavMenu } from './MobileNavMenu';
-import { HeaderProvider } from '../provider/HeaderProvider';
+import { HeaderProvider } from '../providers/Header';
+import * as PageConstant from '@/constants/pages';
 
 export default {
   title: 'Mobile Navigation Menu',
@@ -10,7 +11,7 @@ const pages = ['Settings', 'Statistics'];
 export const DefaultNavMenu = () => (
   <>
     <HeaderProvider>
-      <MobileNavMenu pages={pages} />
+      <MobileNavMenu pages={PageConstant.PAGES} />
     </HeaderProvider>
   </>
 );
