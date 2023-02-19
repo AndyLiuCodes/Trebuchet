@@ -36,12 +36,16 @@ export const ApplicationCard = function ({
   url,
   description,
 }: ApplicationCardProps) {
-  var cardDefaultProps = {
-    sx: { display: 'flex', flexDirection: 'row', padding: '12px' },
+  var defaultCardProps = {
+    sx: {
+      display: 'flex',
+      flexDirection: 'row',
+      padding: '12px',
+    },
   };
   var cardProps = isEditable
-    ? cardDefaultProps
-    : _.merge(cardDefaultProps, {
+    ? defaultCardProps
+    : _.merge(defaultCardProps, {
         onClick: () => {
           window.open(url, '_blank');
         },
@@ -55,27 +59,30 @@ export const ApplicationCard = function ({
   }
 
   return (
-    <Card variant={'outlined'} elevation={0}>
+    <Card sx={{ maxWidth: 400 }} variant={'outlined'} elevation={0}>
       <Box>
-        {!isEditable && description !== '' && (
-          <CardActions
-            sx={{
-              position: 'absolute',
-              zIndex: 9,
-              padding: 0,
-              display: 'block',
-              right: '25px',
-              top: '25px',
-            }}
-          >
-            <Tooltip
-              title={description}
-              sx={{ padding: 0, marginLeft: 'auto' }}
+        <Box sx={{ position: 'relative' }}>
+          {!isEditable && description !== '' && (
+            <CardActions
+              sx={{
+                position: 'absolute',
+                zIndex: 9,
+                padding: 0,
+                margin: '10px',
+                display: 'block',
+                right: 0,
+                top: 0,
+              }}
             >
-              <InfoOutlinedIcon />
-            </Tooltip>
-          </CardActions>
-        )}
+              <Tooltip
+                title={description}
+                sx={{ padding: 0, marginLeft: 'auto' }}
+              >
+                <InfoOutlinedIcon />
+              </Tooltip>
+            </CardActions>
+          )}
+        </Box>
         <Box {...cardProps}>
           <CardMedia
             component='img'
