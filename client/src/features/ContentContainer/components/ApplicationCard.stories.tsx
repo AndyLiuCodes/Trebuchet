@@ -10,13 +10,13 @@ export default {
 {
   id x
   name x
-  description (optional)
+  description (optional) (make it into an info icon)
   onlineStatus x
-  lastSync
-  nextSync
-  serverApplication
-  image
-  url
+  lastSync //
+  nextSync // if has not received a new sync show warning in the icon
+  serverApplication -> make an parent component that uses this to determine if a special card is made
+  image x
+  url x
 }
 */
 
@@ -26,6 +26,8 @@ export const ApplicationCardEditableAndOnline = () => (
     isEditable={true}
     onlineStatus={OnlineStatus.Online}
     imageName={'proxmox-logo.png'}
+    url={'https://google.ca'}
+    description={'hasdhas'}
   />
 );
 
@@ -35,6 +37,8 @@ export const ApplicationCardEditableAndOffline = () => (
     isEditable={true}
     onlineStatus={OnlineStatus.Offline}
     imageName={'proxmox-logo.png'}
+    url={'https://google.ca'}
+    description={'hasdhas'}
   />
 );
 
@@ -44,6 +48,8 @@ export const ApplicationCardNotEditableAndOnline = () => (
     isEditable={false}
     onlineStatus={OnlineStatus.Online}
     imageName={'proxmox-logo.png'}
+    url={'https://google.ca'}
+    description={'hasdhas'}
   />
 );
 
@@ -53,6 +59,8 @@ export const ApplicationCardNotEditableAndOffline = () => (
     isEditable={false}
     onlineStatus={OnlineStatus.Offline}
     imageName={'proxmox-logo.png'}
+    url={'https://google.ca'}
+    description={'hasdhas'}
   />
 );
 
@@ -62,6 +70,8 @@ export const ApplicationCardNotEditableNotTracked = () => (
     isEditable={false}
     onlineStatus={OnlineStatus.NotTracked}
     imageName={'proxmox-logo.png'}
+    url={'https://google.ca'}
+    description={'Server to help with managing virtual machines'}
   />
 );
 
@@ -71,5 +81,7 @@ export const ApplicationCardEditableNotTracked = () => (
     isEditable={true}
     onlineStatus={OnlineStatus.NotTracked}
     imageName={'proxmox-logo.png'}
+    url={'https://google.ca'}
+    description={'Server to help with managing virtual machines'}
   />
 );
