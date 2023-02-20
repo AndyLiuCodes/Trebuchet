@@ -18,6 +18,13 @@ const CardContentNoPadding = styled(CardContent)(`
   }
 `);
 
+const iconSizes = {
+  xs: 21,
+  sm: 20,
+  lg: 18,
+  xl: 17,
+};
+
 type ApplicationCardProps = {
   name: string;
   isEditable: boolean;
@@ -25,6 +32,8 @@ type ApplicationCardProps = {
   imageName: string;
   url: string;
   description: string;
+  lastSync: number;
+  nextSync: number;
 };
 
 export const ApplicationCard = function ({
@@ -34,6 +43,8 @@ export const ApplicationCard = function ({
   imageName,
   url,
   description,
+  lastSync,
+  nextSync,
 }: ApplicationCardProps) {
   var defaultCardProps = {
     sx: {
@@ -57,28 +68,47 @@ export const ApplicationCard = function ({
     console.log('To open editing window');
   }
 
-  const serverStatusColor =
+  const currentTime = Date.now();
+  const isPendingSync =
+    onlineStatus === OnlineStatus.NotTracked
+      ? 'NO_SYNC'
+      : currentTime - nextSync > 300000
+      ? 'ERROR'
+      : currentTime - nextSync >= 0
+      ? 'SYNCING'
+      : 'VALID';
+
+  const cardGlow =
     onlineStatus === OnlineStatus.NotTracked
       ? 'none'
-      : onlineStatus === OnlineStatus.Online
-      ? 'success.main'
-      : 'error.main';
+      : isPendingSync === 'SYNCING'
+      ? 'yellow'
+      : onlineStatus === OnlineStatus.Offline || isPendingSync === 'ERROR'
+      ? 'red'
+      : 'lightgreen';
 
-  const iconSizes = {
-    xs: 21,
-    sm: 20,
-    lg: 18,
-    xl: 17,
-  };
+  const cardGlowStyle =
+    onlineStatus === OnlineStatus.NotTracked
+      ? {}
+      : {
+          WebkitBoxShadow: `0 0 10px ${cardGlow}`,
+          MozBoxShadow: `0 0 10px ${cardGlow}`,
+          boxShadow: `0 0 10px ${cardGlow}`,
+        };
 
   return (
     <Card
-      sx={{
-        maxWidth: 400,
-        borderColor: serverStatusColor,
-        borderWidth: '2.5px',
-      }}
-      variant={'outlined'}
+      sx={[
+        {
+          backgroundColor: '#E5E5CB',
+          maxWidth: 400,
+          transition: 'background 0.5s',
+          '&:hover': {
+            backgroundColor: '#D5CEA3',
+          },
+        },
+        cardGlowStyle,
+      ]}
     >
       <Box>
         <Box sx={{ position: 'relative' }}>
@@ -148,6 +178,8 @@ export const ApplicationCard = function ({
               <Box sx={{ textAlign: 'center' }}>
                 <Typography
                   sx={{
+                    fontWeight: 'bold',
+                    color: '#1A120B',
                     fontSize: {
                       xs: 25,
                       sm: 19,

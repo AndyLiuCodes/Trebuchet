@@ -9,8 +9,12 @@ import * as PagesConstant from '@/constants/pages';
 export const Header = () => {
   return (
     <HeaderProvider>
-      <AppBar position='sticky' color='transparent' elevation={0}>
-        <Container maxWidth='xl'>
+      <AppBar
+        position='sticky'
+        sx={{ backgroundColor: 'inherit', marginBottom: '10px' }}
+        elevation={0}
+      >
+        <Container maxWidth={false}>
           <Toolbar disableGutters>
             <DesktopHeader pages={PagesConstant.PAGES} />
             <MobileHeader pages={PagesConstant.PAGES} />

@@ -28,6 +28,8 @@ export const ApplicationCardEditableAndOnline = () => (
     imageName={'proxmox-logo.png'}
     url={'https://google.ca'}
     description={'hasdhas'}
+    nextSync={0}
+    lastSync={0}
   />
 );
 
@@ -39,6 +41,8 @@ export const ApplicationCardEditableAndOffline = () => (
     imageName={'proxmox-logo.png'}
     url={'https://google.ca'}
     description={'hasdhas'}
+    nextSync={0}
+    lastSync={0}
   />
 );
 
@@ -50,6 +54,8 @@ export const ApplicationCardNotEditableAndOnline = () => (
     imageName={'proxmox-logo.png'}
     url={'https://google.ca'}
     description={'hasdhas'}
+    nextSync={0}
+    lastSync={0}
   />
 );
 
@@ -61,6 +67,8 @@ export const ApplicationCardNotEditableAndOffline = () => (
     imageName={'proxmox-logo.png'}
     url={'https://google.ca'}
     description={'hasdhas'}
+    nextSync={0}
+    lastSync={0}
   />
 );
 
@@ -72,6 +80,8 @@ export const ApplicationCardNotEditableNotTracked = () => (
     imageName={'proxmox-logo.png'}
     url={'https://google.ca'}
     description={'Server to help with managing virtual machines'}
+    nextSync={0}
+    lastSync={0}
   />
 );
 
@@ -83,5 +93,7 @@ export const ApplicationCardEditableNotTracked = () => (
     imageName={'proxmox-logo.png'}
     url={'https://google.ca'}
     description={'Server to help with managing virtual machines'}
+    nextSync={0}
+    lastSync={0}
   />
 );

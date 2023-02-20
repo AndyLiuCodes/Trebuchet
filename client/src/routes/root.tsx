@@ -1,12 +1,20 @@
 import { Header } from '@/components/Header';
-import Container from '@mui/material/Container';
+import { Box } from '@mui/material/';
 import { Outlet } from 'react-router-dom';
 
 export default function Root() {
   return (
-    <Container maxWidth={false}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+      }}
+    >
       <Header />
-      <Outlet />
-    </Container>
+      <Box flex={1}>
+        <Outlet />
+      </Box>
+    </Box>
   );
 }
