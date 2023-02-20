@@ -5,7 +5,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { CardActions, Tooltip } from '@mui/material';
-import LensIcon from '@mui/icons-material/Lens';
 import { styled } from '@mui/material/styles';
 import { OnlineStatus } from '@/features/ContentContainer/';
 import { getImage } from '@/features/ContentContainer/utils/ImageHelper';
@@ -58,30 +57,63 @@ export const ApplicationCard = function ({
     console.log('To open editing window');
   }
 
+  const serverStatusColor =
+    onlineStatus === OnlineStatus.NotTracked
+      ? 'none'
+      : onlineStatus === OnlineStatus.Online
+      ? 'success.main'
+      : 'error.main';
+
+  const iconSizes = {
+    xs: 21,
+    sm: 20,
+    lg: 18,
+    xl: 17,
+  };
+
   return (
-    <Card sx={{ maxWidth: 400 }} variant={'outlined'} elevation={0}>
+    <Card
+      sx={{
+        maxWidth: 400,
+        borderColor: serverStatusColor,
+        borderWidth: '2.5px',
+      }}
+      variant={'outlined'}
+    >
       <Box>
         <Box sx={{ position: 'relative' }}>
-          {!isEditable && description !== '' && (
-            <CardActions
-              sx={{
-                position: 'absolute',
-                zIndex: 9,
-                padding: 0,
-                margin: '10px',
-                display: 'block',
-                right: 0,
-                top: 0,
-              }}
-            >
+          <CardActions
+            sx={{
+              position: 'absolute',
+              zIndex: 9,
+              padding: 0,
+              margin: '10px',
+              display: 'block',
+              right: 0,
+              top: 0,
+            }}
+          >
+            {!isEditable && description !== '' && (
               <Tooltip
                 title={description}
-                sx={{ padding: 0, marginLeft: 'auto' }}
+                sx={{ padding: 0, marginLeft: 'auto', fontSize: iconSizes }}
               >
                 <InfoOutlinedIcon />
               </Tooltip>
-            </CardActions>
-          )}
+            )}
+            {isEditable && (
+              <CardActions sx={{ padding: 0 }}>
+                <EditIcon
+                  sx={{
+                    marginLeft: 'auto',
+                    cursor: 'pointer',
+                    fontSize: iconSizes,
+                  }}
+                  onClick={handleEditButtonClick}
+                />
+              </CardActions>
+            )}
+          </CardActions>
         </Box>
         <Box {...cardProps}>
           <CardMedia
@@ -89,10 +121,12 @@ export const ApplicationCard = function ({
             image={getImage(imageName)}
             sx={{
               display: 'flex',
-              maxWidth: '100px',
+              maxWidth: '100%',
               minWidth: 0,
               flexBasis: 0,
               flexGrow: 1,
+              objectFit: 'cover',
+              height: 'auto',
             }}
           />
           <Box
@@ -100,7 +134,7 @@ export const ApplicationCard = function ({
               display: 'flex',
               flexDirection: 'column',
               flexBasis: 0,
-              flexGrow: 1,
+              flexGrow: 2,
             }}
           >
             <CardContentNoPadding
@@ -108,36 +142,23 @@ export const ApplicationCard = function ({
                 display: 'flex',
                 flex: '1 0 auto',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
+                justifyContent: 'space-around',
               }}
             >
-              <Box
-                sx={{
-                  height: '10%',
-                }}
-              >
-                {isEditable && (
-                  <CardActions sx={{ padding: 0 }}>
-                    <EditIcon
-                      sx={{ marginLeft: 'auto', cursor: 'pointer' }}
-                      onClick={handleEditButtonClick}
-                    />
-                  </CardActions>
-                )}
-              </Box>
               <Box sx={{ textAlign: 'center' }}>
-                <Typography component='div' variant='h6'>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      xs: 25,
+                      sm: 19,
+                      md: 19,
+                      lg: 16,
+                      xl: 16,
+                    },
+                  }}
+                >
                   {name}
                 </Typography>
-              </Box>
-              <Box sx={{ height: '20%', marginLeft: 'auto', padding: 0 }}>
-                {onlineStatus !== OnlineStatus.NotTracked && (
-                  <LensIcon
-                    color={
-                      onlineStatus === OnlineStatus.Online ? 'success' : 'error'
-                    }
-                  />
-                )}
               </Box>
             </CardContentNoPadding>
           </Box>
