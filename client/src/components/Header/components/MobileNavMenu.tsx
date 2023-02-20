@@ -63,7 +63,14 @@ export const MobileNavMenu = ({ pages }: MenuProp) => {
               onNavMenuClick(page.route);
             }}
           >
-            <Typography textAlign='center'>{page.name}</Typography>
+            <Typography
+              textAlign='center'
+              sx={{
+                color: '#E5E5CB',
+              }}
+            >
+              {page.name}
+            </Typography>
           </MenuItem>
         ))}
       </Menu>

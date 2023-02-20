@@ -1,7 +1,17 @@
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
   padding: 0;
   border: 0;
-  background-color: #1a1a1b;
+  background-color: #3c2a21;
   box-shadow: none;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
 }
