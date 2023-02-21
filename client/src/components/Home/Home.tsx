@@ -5,11 +5,6 @@ export function Home() {
   return (
     <Box
       sx={{
-        display: 'flex',
-        height: '100%',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
         paddingX: 5,
       }}
     >
