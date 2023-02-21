@@ -11,7 +11,7 @@ export const Header = () => {
     <HeaderProvider>
       <AppBar
         position='sticky'
-        sx={{ backgroundColor: 'inherit', marginBottom: '10px' }}
+        sx={{ backgroundColor: '#3c2a21', marginBottom: '10px' }}
         elevation={0}
       >
         <Container maxWidth={false}>
