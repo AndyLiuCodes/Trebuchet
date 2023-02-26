@@ -8,15 +8,32 @@ export default {
 
 /*
 {
-  id x
-  name x
-  description (optional) (make it into an info icon)
-  onlineStatus x
-  lastSync //
-  nextSync // if has not received a new sync show warning in the icon
-  serverApplication -> make an parent component that uses this to determine if a special card is made
-  image x
-  url x
+    "rows": [
+        {
+            "Name": "Google",
+            "Description": "",
+            "IsTracked": 0,
+            "SyncFrequency": 60,
+            "ApplicationType": "website",
+            "ServerImage": null,
+            "Url": "https://google.ca",
+            "IsFavourited": 0,
+            "Position": 0,
+            "id": 1
+        }
+    ]
+}
+
+{
+  name: 'Test',
+  description: 'blah blah blah',
+  is_tracked: false,
+  sync_frequency: 60,
+  application_type: 'website',
+  server_image: null,
+  url: 'https://google.ca',
+  is_favourited: false,
+  position: 0
 }
 */
 

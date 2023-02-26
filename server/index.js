@@ -2,7 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import mysql from 'mysql';
+import apiRouter from './routes/api.js';
+import { closePool } from './utils/db.js';
 
 const app = express();
 dotenv.config();
@@ -11,20 +12,25 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
-app.listen(8080, () => console.log(`Server Port: 8080`));
+app.use('/api', apiRouter);
 
-var connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PW,
-  database: process.env.DATABASE,
+const SERVER_PORT = process.env.SERVER_PORT || 8080;
+
+const server = app.listen(SERVER_PORT, function () {
+  console.log(`Server Port: ${SERVER_PORT}`);
 });
 
-connection.connect();
-
-connection.query('SELECT * from Servers', function (err, res, fields) {
-  if (err) throw err;
-  console.log(res);
-});
-
-connection.end();
+function closeApp() {
+  if (server) {
+    server.close(function (err) {
+      if (err) throw err;
+      console.log('Server closing');
+      closePool(function (err) {
+        if (err) throw err;
+        process.exit();
+      });
+    });
+  }
+}
+process.on('SIGTERM', closeApp);
+process.once('SIGINT', closeApp);
