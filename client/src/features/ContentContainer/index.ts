@@ -1,2 +1,2 @@
 export * from './components/ContentContainer';
-export * from './types/CardOnlineStatus';
+export * from './types/serverApplicationTypes';
