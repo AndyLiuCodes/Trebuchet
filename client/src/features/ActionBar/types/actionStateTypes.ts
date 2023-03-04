@@ -3,4 +3,5 @@ export enum ActionState {
   Adding = 1,
   Editing = 2,
   Reordering = 3,
+  Deleting = 4,
 }

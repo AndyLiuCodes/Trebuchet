@@ -35,6 +35,12 @@ export function ContentContainer() {
         setServerApplications(res.data);
       });
   }, []);
+
+  function handleDelete(id: number) {
+    setServerApplications(
+      serverApplications.filter((server: ApplicationServer) => server.id != id)
+    );
+  }
   // const sixMinOld = new Date();
   // sixMinOld.setMinutes(sixMinOld.getMinutes() - 6);
 
@@ -292,6 +298,7 @@ export function ContentContainer() {
               justifyContent={'space-around'}
             >
               <ApplicationCard
+                id={server.id}
                 name={server.name}
                 cardState={action}
                 onlineStatus={2}
@@ -300,6 +307,7 @@ export function ContentContainer() {
                 description={server.description}
                 lastSync={Date.now()}
                 nextSync={Date.now()}
+                handleDelete={() => handleDelete(server.id)}
               />
             </Grid>
           );
