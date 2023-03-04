@@ -50,35 +50,81 @@ export function ActionBar() {
       >
         <Grid item>
           <CustomTooltip title='View applications'>
-            <IconButton>
+            <IconButton
+              sx={{
+                borderRadius: 0,
+                backgroundColor:
+                  action === ActionState.Viewing ? '#0000001a' : '',
+                '&:hover': {
+                  backgroundColor: '#0000001a',
+                },
+              }}
+              onClick={() => onIconClick(ActionState.Viewing)}
+            >
               <HomeIcon />
             </IconButton>
           </CustomTooltip>
         </Grid>
         <Grid item>
           <CustomTooltip title='Add new application'>
-            <IconButton>
+            <IconButton
+              sx={{
+                borderRadius: 0,
+                backgroundColor:
+                  action === ActionState.Adding ? '#0000001a' : '',
+                '&:hover': {
+                  backgroundColor: '#0000001a',
+                },
+              }}
+            >
               <AddIcon />
             </IconButton>
           </CustomTooltip>
         </Grid>
         <Grid item>
           <CustomTooltip title='Edit applications'>
-            <IconButton onClick={() => onIconClick(ActionState.Editing)}>
+            <IconButton
+              sx={{
+                borderRadius: 0,
+                backgroundColor:
+                  action === ActionState.Editing ? '#0000001a' : '',
+                '&:hover': {
+                  backgroundColor: '#0000001a',
+                },
+              }}
+              onClick={() => onIconClick(ActionState.Editing)}
+            >
               <EditIcon />
             </IconButton>
           </CustomTooltip>
         </Grid>
         <Grid item>
           <CustomTooltip title='Delete applications'>
-            <IconButton onClick={() => onIconClick(ActionState.Deleting)}>
+            <IconButton
+              sx={{
+                borderRadius: 0,
+                backgroundColor:
+                  action === ActionState.Deleting ? '#0000001a' : '',
+                '&:hover': {
+                  backgroundColor: '#0000001a',
+                },
+              }}
+              onClick={() => onIconClick(ActionState.Deleting)}
+            >
               <DeleteIcon />
             </IconButton>
           </CustomTooltip>
         </Grid>
         <Grid item>
           <CustomTooltip title='Application list'>
-            <IconButton>
+            <IconButton
+              sx={{
+                borderRadius: 0,
+                '&:hover': {
+                  backgroundColor: '#0000001a',
+                },
+              }}
+            >
               <FormatListBulletedIcon />
             </IconButton>
           </CustomTooltip>

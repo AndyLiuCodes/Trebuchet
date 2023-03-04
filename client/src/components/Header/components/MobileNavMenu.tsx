@@ -36,7 +36,7 @@ export const MobileNavMenu = ({ pages }: MenuProp) => {
         color='inherit'
         sx={{ transform: 'scale(2)' }}
       >
-        <MenuIcon />
+        <MenuIcon sx={{ color: '#E5E5CB' }} />
       </IconButton>
       <Menu
         id='menu-appbar'
@@ -54,6 +54,9 @@ export const MobileNavMenu = ({ pages }: MenuProp) => {
         onClose={handleCloseNavMenu}
         sx={{
           display: { xs: 'block', md: 'none' },
+          '& .MuiPaper-root': {
+            backgroundColor: '#1A120B',
+          },
         }}
       >
         {pages.map((page: Page) => (
