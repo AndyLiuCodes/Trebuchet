@@ -2,6 +2,7 @@ import { Box, Grid, Tooltip, Zoom, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import ReorderIcon from '@mui/icons-material/Reorder';
+import DeleteIcon from '@mui/icons-material/Delete';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { ReactElement } from 'react';
 import { useHomeAction, useHomeSetAction } from '@/components/Home';
@@ -65,6 +66,13 @@ export function ActionBar() {
           <CustomTooltip title='Reorder applications'>
             <IconButton onClick={() => onIconClick(ActionState.Reordering)}>
               <ReorderIcon />
+            </IconButton>
+          </CustomTooltip>
+        </Grid>
+        <Grid item>
+          <CustomTooltip title='Delete applications'>
+            <IconButton onClick={() => onIconClick(ActionState.Deleting)}>
+              <DeleteIcon />
             </IconButton>
           </CustomTooltip>
         </Grid>
