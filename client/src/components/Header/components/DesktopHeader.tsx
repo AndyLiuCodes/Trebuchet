@@ -49,7 +49,7 @@ export const DesktopHeader = ({ pages }: MenuProp) => {
             onClick={() => {
               onNavMenuClick(page.route);
             }}
-            sx={{ my: 2, color: 'white', display: 'block' }}
+            sx={{ my: 2, color: '#E5E5CB', display: 'block' }}
           >
             {page.name}
           </Button>
