@@ -1,13 +1,11 @@
 import { Grid, Box } from '@mui/material';
-
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import { ApplicationCard } from './ApplicationCard';
 import {
   OnlineStatus,
   ApplicationServer,
 } from '@/features/ContentContainer/types/serverApplicationTypes';
 import { useState, useEffect } from 'react';
+import { useHomeAction } from '@/components/Home';
 
 //card data
 /*
@@ -26,8 +24,9 @@ import { useState, useEffect } from 'react';
 ]
 */
 
-export function ContentSquare() {
+export function ContentContainer() {
   const [serverApplications, setServerApplications] = useState([]);
+  const action = useHomeAction();
 
   useEffect(() => {
     fetch('http://localhost:8080/api/applications')
@@ -294,7 +293,7 @@ export function ContentSquare() {
             >
               <ApplicationCard
                 name={server.name}
-                isEditable={server.isEditable}
+                cardState={action}
                 onlineStatus={2}
                 imageName={server.imageName || 'proxmox-logo.png'}
                 url={server.url}

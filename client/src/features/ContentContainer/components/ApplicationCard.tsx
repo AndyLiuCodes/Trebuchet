@@ -10,6 +10,7 @@ import { OnlineStatus } from '@/features/ContentContainer/';
 import { getImage } from '@/features/ContentContainer/utils/ImageHelper';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import _ from 'lodash';
+import { ActionState } from '@/features/ActionBar';
 
 const CardContentNoPadding = styled(CardContent)(`
   padding: 0;
@@ -27,7 +28,7 @@ const iconSizes = {
 
 type ApplicationCardProps = {
   name: string;
-  isEditable: boolean;
+  cardState: ActionState;
   onlineStatus: OnlineStatus;
   imageName: string;
   url: string;
@@ -38,7 +39,7 @@ type ApplicationCardProps = {
 
 export const ApplicationCard = function ({
   name,
-  isEditable,
+  cardState,
   onlineStatus,
   imageName,
   url,
@@ -53,16 +54,17 @@ export const ApplicationCard = function ({
       padding: '12px',
     },
   };
-  var cardProps = isEditable
-    ? defaultCardProps
-    : _.merge(defaultCardProps, {
-        onClick: () => {
-          window.open(url, '_blank');
-        },
-        sx: {
-          cursor: 'pointer',
-        },
-      });
+  var cardProps =
+    cardState === ActionState.Viewing
+      ? defaultCardProps
+      : _.merge(defaultCardProps, {
+          onClick: () => {
+            window.open(url, '_blank');
+          },
+          sx: {
+            cursor: 'pointer',
+          },
+        });
 
   function handleEditButtonClick() {
     console.log('To open editing window');
@@ -123,7 +125,7 @@ export const ApplicationCard = function ({
               top: 0,
             }}
           >
-            {!isEditable && description !== '' && (
+            {cardState === ActionState.Viewing && description !== '' && (
               <Tooltip
                 title={description}
                 sx={{ padding: 0, marginLeft: 'auto', fontSize: iconSizes }}
@@ -131,7 +133,7 @@ export const ApplicationCard = function ({
                 <InfoOutlinedIcon />
               </Tooltip>
             )}
-            {isEditable && (
+            {cardState === ActionState.Editing && (
               <CardActions sx={{ padding: 0 }}>
                 <EditIcon
                   sx={{

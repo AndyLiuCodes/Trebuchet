@@ -1,3 +1,5 @@
+import { ActionState } from '@/features/ActionBar';
+
 export enum OnlineStatus {
   NotTracked = 0,
   Offline = 1,
@@ -7,7 +9,7 @@ export enum OnlineStatus {
 export interface ApplicationServer {
   id: number;
   name: string;
-  isEditable: boolean;
+  cardState: ActionState;
   imageName: string;
   url: string;
   description: string;
