@@ -13,6 +13,10 @@ interface TooltipProps {
   children: ReactElement;
 }
 
+type ActionBarProps = {
+  onAddOpenClick: () => void;
+};
+
 function CustomTooltip(props: TooltipProps) {
   return (
     <Tooltip
@@ -26,7 +30,7 @@ function CustomTooltip(props: TooltipProps) {
   );
 }
 
-export function ActionBar() {
+export function ActionBar({ onAddOpenClick }: ActionBarProps) {
   const action = useHomeAction();
   const setAction = useHomeSetAction();
 
@@ -76,6 +80,7 @@ export function ActionBar() {
                   backgroundColor: '#0000001a',
                 },
               }}
+              onClick={onAddOpenClick}
             >
               <AddIcon />
             </IconButton>

@@ -16,3 +16,17 @@ export interface ApplicationServer {
   lastSync: number;
   nextSync: number;
 }
+
+export interface applicationDetailsType {
+  id: number;
+  date_added: Date;
+  name: string;
+  description: string;
+  is_tracked: boolean;
+  sync_frequency: number;
+  application_type: string;
+  server_image: any;
+  url: string;
+  is_favourite: boolean;
+  position: number;
+}

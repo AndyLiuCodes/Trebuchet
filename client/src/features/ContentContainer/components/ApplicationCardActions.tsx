@@ -6,6 +6,7 @@ import {
   Button,
   Grid,
   Typography,
+  Fade,
 } from '@mui/material';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -115,34 +116,36 @@ export function ApplicationCardActions({
           onClick={handleOpen}
         />
       )}
-      <Modal open={deleteModalOpen} onClose={handleClose}>
-        <Box sx={{ ...modalStyle }}>
-          <Typography sx={{ width: '100%' }} variant='h4'>
-            Confirm?
-          </Typography>
-          <Typography sx={{ paddingY: '10px' }}>
-            Confirm that you want to delete "{name}" application?
-          </Typography>
-          <Grid container justifyContent={'flex-end'} spacing={1}>
-            <Grid item>
-              <Button
-                sx={{
-                  backgroundColor: '#f44336',
-                  color: '#e3f2fd',
-                  '&:hover': {
-                    backgroundColor: '#d32f2f',
-                  },
-                }}
-                onClick={handleApplicationDelete}
-              >
-                Delete
-              </Button>
+      <Modal open={deleteModalOpen} onClose={handleClose} closeAfterTransition>
+        <Fade in={deleteModalOpen}>
+          <Box sx={{ ...modalStyle }}>
+            <Typography sx={{ width: '100%' }} variant='h4'>
+              Confirm?
+            </Typography>
+            <Typography sx={{ paddingY: '10px' }}>
+              Confirm that you want to delete "{name}" application?
+            </Typography>
+            <Grid container justifyContent={'flex-end'} spacing={1}>
+              <Grid item>
+                <Button
+                  sx={{
+                    backgroundColor: '#f44336',
+                    color: '#e3f2fd',
+                    '&:hover': {
+                      backgroundColor: '#d32f2f',
+                    },
+                  }}
+                  onClick={handleApplicationDelete}
+                >
+                  Delete
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button onClick={handleClose}>Cancel</Button>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Button onClick={handleClose}>Cancel</Button>
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
+        </Fade>
       </Modal>
     </CardActions>
   );
