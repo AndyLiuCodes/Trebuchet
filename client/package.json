@@ -18,6 +18,7 @@
     "@mui/joy": "^5.0.0-alpha.67",
     "@mui/material": "^5.11.8",
     "lodash": "^4.17.21",
+    "mui-image": "^1.0.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1"
@@ -32,6 +33,7 @@
     "@storybook/builder-vite": "^0.1.37",
     "@storybook/react": "^6.1.21",
     "@storybook/testing-library": "^0.0.13",
+    "@types/mui-image": "^1.0.1",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",

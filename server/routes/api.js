@@ -46,7 +46,7 @@ apiRouter.post('/applications/create', function (req, res) {
       res.status(400).send(err);
       throw err;
     }
-    res.status(200).send('Application added successfully.');
+    res.status(200).send({ id: dbRes.data.insertId });
   });
 });
 

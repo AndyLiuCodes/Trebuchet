@@ -6,6 +6,11 @@ import {
 } from '@/features/ContentContainer/types/serverApplicationTypes';
 import { useState, useEffect } from 'react';
 import { useHomeAction } from '@/components/Home';
+import {
+  useServerApplications,
+  useSetServerApplications,
+} from '@/components/Home/hooks/ServerApplicationsProvider';
+import { applicationDetailsType } from '@/features/ContentContainer/types/serverApplicationTypes';
 
 //card data
 /*
@@ -25,7 +30,9 @@ import { useHomeAction } from '@/components/Home';
 */
 
 export function ContentContainer() {
-  const [serverApplications, setServerApplications] = useState([]);
+  const serverApplications = useServerApplications();
+  const setServerApplications = useSetServerApplications();
+
   const action = useHomeAction();
 
   useEffect(() => {
@@ -38,242 +45,11 @@ export function ContentContainer() {
 
   function handleDelete(id: number) {
     setServerApplications(
-      serverApplications.filter((server: ApplicationServer) => server.id != id)
+      serverApplications.filter(
+        (server: applicationDetailsType) => server.id != id
+      )
     );
   }
-  // const sixMinOld = new Date();
-  // sixMinOld.setMinutes(sixMinOld.getMinutes() - 6);
-
-  // const fiveMinOld = new Date();
-  // fiveMinOld.setMinutes(fiveMinOld.getMinutes() - 5);
-
-  // const fourMinOld = new Date();
-  // fourMinOld.setMinutes(fourMinOld.getMinutes() - 4);
-
-  // const freshTime = new Date();
-
-  // const sixMinNew = new Date();
-  // sixMinNew.setMinutes(sixMinNew.getMinutes() + 6);
-
-  // const fiveMinNew = new Date();
-  // fiveMinOld.setMinutes(fiveMinOld.getMinutes() + 5);
-
-  // const fourMinNew = new Date();
-  // fourMinOld.setMinutes(fourMinOld.getMinutes() + 4);
-  // const tenMinOld = new Date();
-  // tenMinOld.setMinutes(tenMinOld.getMinutes() - 10);
-
-  // const serverApplications = [
-  //   {
-  //     key: 1,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.Online,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 2,
-  //     name: 'asdfasdfasdfasd',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.Online,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: tenMinOld.getTime(),
-  //     nextSync: fiveMinOld.getTime(),
-  //   },
-  //   {
-  //     key: 3,
-  //     name: 'Proxmox',
-  //     isEditable: false,
-  //     onlineStatus: OnlineStatus.Online,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: tenMinOld.getTime(),
-  //     nextSync: sixMinOld.getTime(),
-  //   },
-  //   {
-  //     key: 4,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.Online,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 5,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.Online,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 6,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.Online,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 7,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.Online,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 8,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.Offline,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 9,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 10,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 11,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 12,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 13,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 14,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 15,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 16,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 17,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 18,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  //   {
-  //     key: 19,
-  //     name: 'Proxmox',
-  //     isEditable: true,
-  //     onlineStatus: OnlineStatus.NotTracked,
-  //     imageName: 'proxmox-logo.png',
-  //     url: 'https://google.ca',
-  //     description: 'hasfsajldgjlksadhgklsahg',
-  //     lastSync: freshTime.getTime(),
-  //     nextSync: sixMinNew.getTime(),
-  //   },
-  // ];
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -284,7 +60,7 @@ export function ContentContainer() {
         justifyContent={'center'}
         spacing={3}
       >
-        {serverApplications.map((server: ApplicationServer) => {
+        {serverApplications.map((server: applicationDetailsType) => {
           return (
             <Grid
               item
@@ -302,7 +78,7 @@ export function ContentContainer() {
                 name={server.name}
                 cardState={action}
                 onlineStatus={2}
-                imageName={server.imageName || 'proxmox-logo.png'}
+                imageName={server.server_image || 'proxmox-logo.png'}
                 url={server.url}
                 description={server.description}
                 lastSync={Date.now()}
