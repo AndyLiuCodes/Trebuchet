@@ -2,7 +2,7 @@ import { useContext, Dispatch, SetStateAction } from 'react';
 import {
   ServerApplicationsContext,
   SetServerApplicationsContext,
-} from '@/components/Home';
+} from '@/pages/Home';
 import { applicationDetailsType } from '@/features/ContentContainer';
 
 export function useServerApplications() {

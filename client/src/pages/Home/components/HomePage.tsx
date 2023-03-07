@@ -1,10 +1,7 @@
 import { Box } from '@mui/material';
 import { ContentContainer } from '@/features/ContentContainer';
 import { ActionBar } from '@/features/ActionBar';
-import {
-  HomeStateProvider,
-  ServerApplicationsProvider,
-} from '@/components/Home';
+import { HomeStateProvider, ServerApplicationsProvider } from '@/pages/Home';
 import { useState } from 'react';
 import { AddApplicationModal } from '@/features/AddApplicationCardModal';
 

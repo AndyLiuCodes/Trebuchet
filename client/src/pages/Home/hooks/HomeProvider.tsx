@@ -1,4 +1,4 @@
-import { HomeActionContext, HomeSetActionContext } from '@/components/Home';
+import { HomeActionContext, HomeSetActionContext } from '@/pages/Home';
 import { ActionState } from '@/features/ActionBar';
 import { useContext, Dispatch, SetStateAction } from 'react';
 

@@ -5,11 +5,11 @@ import {
   ApplicationServer,
 } from '@/features/ContentContainer/types/serverApplicationTypes';
 import { useState, useEffect } from 'react';
-import { useHomeAction } from '@/components/Home';
+import { useHomeAction } from '@/pages/Home';
 import {
   useServerApplications,
   useSetServerApplications,
-} from '@/components/Home/hooks/ServerApplicationsProvider';
+} from '@/pages/Home/hooks/ServerApplicationsProvider';
 import { applicationDetailsType } from '@/features/ContentContainer/types/serverApplicationTypes';
 
 //card data

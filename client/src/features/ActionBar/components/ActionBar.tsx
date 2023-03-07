@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import HomeIcon from '@mui/icons-material/Home';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { ReactElement } from 'react';
-import { useHomeAction, useHomeSetAction } from '@/components/Home';
+import { useHomeAction, useHomeSetAction } from '@/pages/Home';
 import { ActionState } from '@/features/ActionBar/types/actionStateTypes';
 
 interface TooltipProps {

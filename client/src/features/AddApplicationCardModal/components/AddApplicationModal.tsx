@@ -23,7 +23,7 @@ import { useState } from 'react';
 import {
   useServerApplications,
   useSetServerApplications,
-} from '@/components/Home/hooks/ServerApplicationsProvider';
+} from '@/pages/Home/hooks/ServerApplicationsProvider';
 
 type AddApplicationProps = {
   modalOpen: boolean;

@@ -13,7 +13,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import EditIcon from '@mui/icons-material/Edit';
 import { ActionState } from '@/features/ActionBar';
 import { useState } from 'react';
-import { useHomeSetAction } from '@/components/Home';
+import { useHomeSetAction } from '@/pages/Home';
 
 type ActionsPropType = {
   id: number;
