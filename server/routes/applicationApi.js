@@ -11,7 +11,7 @@ apiRouter.post('/applications/update/:serverId', serverApplications.updateOne);
 apiRouter.post('/applications/delete/:serverId', serverApplications.deleteOne);
 
 apiRouter.all('*', function (req, res) {
-  res.send('ERROR');
+  res.send('ERROR: Unknown route');
 });
 
 module.exports = apiRouter;
