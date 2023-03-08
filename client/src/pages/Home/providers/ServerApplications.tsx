@@ -5,24 +5,24 @@ import {
   SetStateAction,
   useState,
 } from 'react';
-import { applicationDetailsType } from '@/features/ContentContainer/types/serverApplicationTypes';
+import { ApplicationDetails } from '@/types';
 
 type ServerApplicationsProps = {
   children: ReactElement;
 };
 
 export const ServerApplicationsContext = createContext<
-  Array<applicationDetailsType>
+  ApplicationDetails[]
 >([]);
 export const SetServerApplicationsContext = createContext<
-  Dispatch<SetStateAction<Array<applicationDetailsType>>>
+  Dispatch<SetStateAction<ApplicationDetails[]>>
 >(() => {});
 
 export function ServerApplicationsProvider({
   children,
 }: ServerApplicationsProps) {
   const [serverApplications, setServerApplications] = useState<
-    Array<applicationDetailsType>
+    ApplicationDetails[]
   >([]);
 
   return (

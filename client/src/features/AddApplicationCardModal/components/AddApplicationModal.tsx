@@ -24,6 +24,8 @@ import {
   useServerApplications,
   useSetServerApplications,
 } from '@/pages/Home/hooks/ServerApplicationsProvider';
+import { ModalApplicationDetails } from '@/types';
+import useApplicationService from '@/hooks/ApplicationService';
 
 type AddApplicationProps = {
   modalOpen: boolean;
@@ -67,14 +69,14 @@ const applications = [
   },
 ];
 
-interface inputsType {
+type inputsType = {
   applicationName: string;
   url: string;
   applicationType: string;
   isTracked: boolean;
   syncFrequency: number;
   description: string;
-}
+};
 
 const initialInputs: inputsType = {
   applicationName: '',
@@ -92,36 +94,31 @@ export function AddApplicationModal({
   const [inputs, setInputs] = useState<inputsType>(initialInputs);
   const serverApplications = useServerApplications();
   const setServerApplications = useSetServerApplications();
+  const applicationService = useApplicationService();
 
   function handleChangeValue(newValue: any) {
     setInputs({ ...inputs, ...newValue });
   }
 
   function onSubmit() {
-    const newApplicationDetails = {
+    const newApplicationDetails: ModalApplicationDetails = {
       name: inputs.applicationName,
       description: inputs.description,
-      is_tracked: inputs.isTracked,
-      sync_frequency: inputs.syncFrequency,
-      application_type: inputs.applicationType,
-      server_image: null,
+      isTracked: inputs.isTracked,
+      syncFrequency: inputs.syncFrequency,
+      applicationType: inputs.applicationType,
+      serverImage: null,
       url: inputs.url,
-      is_favourite: false,
+      isFavourite: false,
       position: serverApplications.length,
     };
-    fetch('http://localhost:8080/api/applications/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newApplicationDetails),
-    })
-      .then((res) => res.json())
+    applicationService
+      .addServerApplication(newApplicationDetails)
       .then((res) => {
         setInputs(initialInputs);
         setServerApplications([
           ...serverApplications,
-          { ...newApplicationDetails, id: res.id, date_added: new Date() },
+          { ...newApplicationDetails, id: res.id, dateAdded: new Date() },
         ]);
         handleCloseModal();
       });

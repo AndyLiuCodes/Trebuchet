@@ -4,7 +4,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import { OnlineStatus } from '@/features/ContentContainer/';
 import { getImage } from '@/features/ContentContainer/utils/ImageHelper';
 import _ from 'lodash';
 import { ActionState } from '@/features/ActionBar';
@@ -21,7 +20,6 @@ type ApplicationCardProps = {
   id: number;
   name: string;
   cardState: ActionState;
-  onlineStatus: OnlineStatus;
   imageName: string;
   url: string;
   description: string;
@@ -34,7 +32,6 @@ export const ApplicationCard = function ({
   id,
   name,
   cardState,
-  onlineStatus,
   imageName,
   url,
   description,
@@ -64,32 +61,24 @@ export const ApplicationCard = function ({
         });
 
   const currentTime = Date.now();
-  const isPendingSync =
-    onlineStatus === OnlineStatus.NotTracked
-      ? 'NO_SYNC'
-      : currentTime - nextSync > 300000
-      ? 'ERROR'
-      : currentTime - nextSync >= 0
-      ? 'SYNCING'
-      : 'VALID';
+  const onlineStatus = false;
 
-  const cardGlow =
-    onlineStatus === OnlineStatus.NotTracked
-      ? 'none'
-      : isPendingSync === 'SYNCING'
-      ? 'yellow'
-      : onlineStatus === OnlineStatus.Offline || isPendingSync === 'ERROR'
-      ? 'red'
-      : 'lightgreen';
+  const cardGlow = 'lightgreen';
+  // onlineStatus === OnlineStatus.NotTracked
+  //   ? 'none'
+  //   : isPendingSync === 'SYNCING'
+  //   ? 'yellow'
+  //   : onlineStatus === OnlineStatus.Offline || isPendingSync === 'ERROR'
+  //   ? 'red'
+  //   : 'lightgreen';
 
-  const cardGlowStyle =
-    onlineStatus === OnlineStatus.NotTracked
-      ? {}
-      : {
-          WebkitBoxShadow: `0 0 10px ${cardGlow}`,
-          MozBoxShadow: `0 0 10px ${cardGlow}`,
-          boxShadow: `0 0 10px ${cardGlow}`,
-        };
+  const cardGlowStyle = onlineStatus
+    ? {}
+    : {
+        WebkitBoxShadow: `0 0 10px ${cardGlow}`,
+        MozBoxShadow: `0 0 10px ${cardGlow}`,
+        boxShadow: `0 0 10px ${cardGlow}`,
+      };
 
   return (
     <Card

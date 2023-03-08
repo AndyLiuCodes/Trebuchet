@@ -14,6 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { ActionState } from '@/features/ActionBar';
 import { useState } from 'react';
 import { useHomeSetAction } from '@/pages/Home';
+import useApplicationService from '@/hooks/ApplicationService';
 
 type ActionsPropType = {
   id: number;
@@ -53,6 +54,7 @@ export function ApplicationCardActions({
   handleDelete,
 }: ActionsPropType) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const applicationService = useApplicationService();
 
   function handleEditClick() {
     console.log('To open editing window');
@@ -67,11 +69,10 @@ export function ApplicationCardActions({
   }
 
   function handleApplicationDelete() {
-    fetch(`http://localhost:8080/api/applications/delete/${id}`, {
-      method: 'POST',
-    })
-      .then(() => handleDelete())
-      .then(() => handleClose());
+    applicationService.deleteServerApplication(id).then(() => {
+      handleDelete();
+      handleClose();
+    });
   }
 
   return (

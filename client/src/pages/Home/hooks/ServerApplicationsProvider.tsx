@@ -3,14 +3,14 @@ import {
   ServerApplicationsContext,
   SetServerApplicationsContext,
 } from '@/pages/Home';
-import { applicationDetailsType } from '@/features/ContentContainer';
+import { ApplicationDetails } from '@/types';
 
 export function useServerApplications() {
-  return useContext<Array<applicationDetailsType>>(ServerApplicationsContext);
+  return useContext<ApplicationDetails[]>(ServerApplicationsContext);
 }
 
 export function useSetServerApplications() {
-  return useContext<Dispatch<SetStateAction<Array<applicationDetailsType>>>>(
+  return useContext<Dispatch<SetStateAction<ApplicationDetails[]>>>(
     SetServerApplicationsContext
   );
 }
