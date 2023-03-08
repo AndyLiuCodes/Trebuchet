@@ -16,7 +16,7 @@ export function ApplicationsService(): IApplicationsService {
       return fetch(API_URL)
         .then((res) => res.json())
         .then((res) => {
-          return res.data;
+          return res;
         });
     },
     async addServerApplication(newApplicationDetails: ModalApplicationDetails) {
