@@ -48,7 +48,7 @@ export function ActionBar({ onAddOpenClick }: ActionBarProps) {
         justifyContent={'right'}
         sx={{
           opacity: 0.7,
-          backgroundColor: '#E5E5CB',
+          backgroundColor: 'secondary.main',
           borderRadius: '4px 4px 0 0',
         }}
       >
@@ -58,9 +58,11 @@ export function ActionBar({ onAddOpenClick }: ActionBarProps) {
               sx={{
                 borderRadius: 0,
                 backgroundColor:
-                  action === ActionState.Viewing ? '#0000001a' : '',
+                  action === ActionState.Viewing
+                    ? 'secondary.contrastText'
+                    : '',
                 '&:hover': {
-                  backgroundColor: '#0000001a',
+                  backgroundColor: 'secondary.contrastText',
                 },
               }}
               onClick={() => onIconClick(ActionState.Viewing)}
@@ -74,10 +76,8 @@ export function ActionBar({ onAddOpenClick }: ActionBarProps) {
             <IconButton
               sx={{
                 borderRadius: 0,
-                backgroundColor:
-                  action === ActionState.Adding ? '#0000001a' : '',
                 '&:hover': {
-                  backgroundColor: '#0000001a',
+                  backgroundColor: 'secondary.contrastText',
                 },
               }}
               onClick={onAddOpenClick}
@@ -92,9 +92,11 @@ export function ActionBar({ onAddOpenClick }: ActionBarProps) {
               sx={{
                 borderRadius: 0,
                 backgroundColor:
-                  action === ActionState.Editing ? '#0000001a' : '',
+                  action === ActionState.Editing
+                    ? 'secondary.contrastText'
+                    : '',
                 '&:hover': {
-                  backgroundColor: '#0000001a',
+                  backgroundColor: 'secondary.contrastText',
                 },
               }}
               onClick={() => onIconClick(ActionState.Editing)}
@@ -109,9 +111,11 @@ export function ActionBar({ onAddOpenClick }: ActionBarProps) {
               sx={{
                 borderRadius: 0,
                 backgroundColor:
-                  action === ActionState.Deleting ? '#0000001a' : '',
+                  action === ActionState.Deleting
+                    ? 'secondary.contrastText'
+                    : '',
                 '&:hover': {
-                  backgroundColor: '#0000001a',
+                  backgroundColor: 'secondary.contrastText',
                 },
               }}
               onClick={() => onIconClick(ActionState.Deleting)}
@@ -126,7 +130,7 @@ export function ActionBar({ onAddOpenClick }: ActionBarProps) {
               sx={{
                 borderRadius: 0,
                 '&:hover': {
-                  backgroundColor: '#0000001a',
+                  backgroundColor: 'secondary.contrastText',
                 },
               }}
             >

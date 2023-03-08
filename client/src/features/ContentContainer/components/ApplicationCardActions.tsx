@@ -37,8 +37,8 @@ const modalStyle = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: '#E5E5CB',
-  border: '2px solid #E5E5CB',
+  bgcolor: 'secondary.main',
+  border: '2px solid secondary.contrastText',
   borderRadius: '8px',
   boxShadow: 24,
   pt: 2,
@@ -97,22 +97,22 @@ export function ApplicationCardActions({
       )}
       {cardState === ActionState.Editing && (
         <EditIcon
+          color='warning'
           sx={{
             marginLeft: 'auto',
             cursor: 'pointer',
             fontSize: iconSizes,
-            color: '#FF6600',
           }}
           onClick={handleEditClick}
         />
       )}
       {cardState === ActionState.Deleting && (
         <HighlightOffIcon
+          color='error'
           sx={{
             marginLeft: 'auto',
             cursor: 'pointer',
             fontSize: iconSizes,
-            color: '#A80000',
           }}
           onClick={handleOpen}
         />
@@ -130,10 +130,9 @@ export function ApplicationCardActions({
               <Grid item>
                 <Button
                   sx={{
-                    backgroundColor: '#f44336',
-                    color: '#e3f2fd',
+                    backgroundColor: 'error.main',
                     '&:hover': {
-                      backgroundColor: '#d32f2f',
+                      backgroundColor: 'error.contrastText',
                     },
                   }}
                   onClick={handleApplicationDelete}
@@ -142,7 +141,9 @@ export function ApplicationCardActions({
                 </Button>
               </Grid>
               <Grid item>
-                <Button onClick={handleClose}>Cancel</Button>
+                <Button sx={{ color: 'info.main' }} onClick={handleClose}>
+                  Cancel
+                </Button>
               </Grid>
             </Grid>
           </Box>

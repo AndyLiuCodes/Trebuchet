@@ -37,8 +37,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: '#E5E5CB',
-  border: '2px solid #E5E5CB',
+  bgcolor: 'secondary.main',
+  border: '2px solid secondary.contrastText',
   borderRadius: '8px',
   boxShadow: 24,
   width: '60%',
@@ -149,6 +149,7 @@ export function AddApplicationModal({
                     <TextField
                       label='Application Name'
                       fullWidth
+                      color='info'
                       variant='filled'
                       value={inputs.applicationName}
                       onChange={(e) =>
@@ -160,6 +161,7 @@ export function AddApplicationModal({
                     <TextField
                       label='URL'
                       fullWidth
+                      color='info'
                       variant='filled'
                       value={inputs.url}
                       onChange={(e) =>
@@ -194,10 +196,15 @@ export function AddApplicationModal({
                     </FormControl>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField label='Tags' fullWidth variant='filled' />
+                    <TextField
+                      label='Tags'
+                      fullWidth
+                      color='info'
+                      variant='filled'
+                    />
                   </Grid>
                   <Grid item xs={6}>
-                    <FormControl fullWidth variant='filled'>
+                    <FormControl fullWidth color='info' variant='filled'>
                       <FormLabel id='track-online-btn-group'>
                         Track Online Status
                       </FormLabel>
@@ -214,12 +221,12 @@ export function AddApplicationModal({
                       >
                         <FormControlLabel
                           value={false}
-                          control={<Radio />}
+                          control={<Radio color='info' />}
                           label='Disabled'
                         />
                         <FormControlLabel
                           value={true}
-                          control={<Radio />}
+                          control={<Radio color='info' />}
                           label='Enabled'
                         />
                       </RadioGroup>
@@ -229,6 +236,7 @@ export function AddApplicationModal({
                     <TextField
                       label='Syncronization Frequency'
                       variant='filled'
+                      color='info'
                       fullWidth
                       value={inputs.syncFrequency}
                       disabled
@@ -244,6 +252,7 @@ export function AddApplicationModal({
                       label='Description'
                       fullWidth
                       variant='filled'
+                      color='info'
                       multiline
                       rows={4}
                       value={inputs.description}
@@ -266,10 +275,10 @@ export function AddApplicationModal({
               <Grid item>
                 <Button
                   sx={{
-                    backgroundColor: '#4C2F21',
-                    color: '#e3f2fd',
+                    backgroundColor: 'background.default',
+                    color: 'primary.main',
                     '&:hover': {
-                      backgroundColor: '#3C2A21',
+                      backgroundColor: 'background.paper',
                     },
                   }}
                   type={'button'}
@@ -282,7 +291,7 @@ export function AddApplicationModal({
               </Grid>
               <Grid item>
                 {/* Add a confirmation message to indicate that data will be lost */}
-                <Button sx={{ color: '#f44336' }} onClick={handleCloseModal}>
+                <Button color='error' onClick={handleCloseModal}>
                   Cancel
                 </Button>
               </Grid>

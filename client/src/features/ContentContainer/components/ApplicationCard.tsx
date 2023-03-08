@@ -84,11 +84,11 @@ export const ApplicationCard = function ({
     <Card
       sx={[
         {
-          backgroundColor: '#E5E5CB',
+          backgroundColor: 'secondary.main',
           maxWidth: 400,
           transition: 'background 0.5s',
           '&:hover': {
-            backgroundColor: '#D5CEA3',
+            backgroundColor: 'secondary.hover',
           },
         },
         cardGlowStyle,
@@ -137,7 +137,7 @@ export const ApplicationCard = function ({
               <Typography
                 sx={{
                   fontWeight: 'bold',
-                  color: '#1A120B',
+                  color: 'background.paper',
                   fontSize: {
                     xs: 25,
                     sm: 19,
