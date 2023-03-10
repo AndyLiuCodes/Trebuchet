@@ -19,6 +19,9 @@ import {
 import { toInteger } from 'lodash';
 import { Image } from 'mui-image';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useServerApplications } from '@/pages/Home/hooks/ServerApplicationsProvider';
 import { ModalApplicationDetails } from '@/types';
 import useApplicationService from '@/hooks/ApplicationService';
@@ -72,7 +75,7 @@ type inputsType = {
 const initialInputs: inputsType = {
   applicationName: '',
   url: '',
-  applicationType: '',
+  applicationType: 'Custom',
   isTracked: false,
   syncFrequency: 10,
   description: '',
@@ -86,6 +89,31 @@ export function AddApplicationModal({
   const [childModalOpen, setChildModalOpen] = useState(false);
   const [serverApplications, setServerApplications] = useServerApplications();
   const applicationService = useApplicationService();
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required('Application Name cannot be empty.')
+      .max(255, 'Application Name must be less than 255 characters.'),
+    description: Yup.string(),
+    isTracked: Yup.boolean().required('Field cannot be empty.'),
+    syncFrequency: Yup.number(),
+    applicationType: Yup.string().required('Application Type cannot be empty.'),
+    url: Yup.string()
+      .required('URL cannot be empty')
+      .matches(
+        /^(http|https):\/\//,
+        'The URL must being with http:// or https://'
+      ),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(validationSchema),
+  });
 
   function handleChangeValue(newValue: any) {
     setInputs({ ...inputs, ...newValue });
@@ -105,6 +133,11 @@ export function AddApplicationModal({
     handleCloseModal();
   }
 
+  function handleCloseCurrentModal() {
+    reset();
+    handleCloseModal();
+  }
+
   function onSubmit() {
     const newApplicationDetails: ModalApplicationDetails = {
       name: inputs.applicationName,
@@ -120,6 +153,7 @@ export function AddApplicationModal({
     applicationService
       .addServerApplication(newApplicationDetails)
       .then((res) => {
+        reset();
         setInputs(initialInputs);
         setServerApplications([
           ...serverApplications,
@@ -130,7 +164,7 @@ export function AddApplicationModal({
   }
 
   return (
-    <Modal open={modalOpen} onClose={handleCloseModal}>
+    <Modal open={modalOpen} onClose={handleCloseCurrentModal}>
       <Fade in={modalOpen}>
         <Box sx={style}>
           <Box>
@@ -157,9 +191,12 @@ export function AddApplicationModal({
                       color='info'
                       variant='filled'
                       value={inputs.applicationName}
+                      {...register('name')}
                       onChange={(e) =>
                         handleChangeValue({ applicationName: e.target.value })
                       }
+                      error={errors.name ? true : false}
+                      helperText={errors.name?.message?.toString()}
                     />
                   </Grid>
                   <Grid item xs={12} lg={6}>
@@ -169,9 +206,12 @@ export function AddApplicationModal({
                       color='info'
                       variant='filled'
                       value={inputs.url}
+                      {...register('url')}
                       onChange={(e) =>
                         handleChangeValue({ url: e.target.value })
                       }
+                      error={errors.url ? true : false}
+                      helperText={errors.url?.message?.toString()}
                     />
                   </Grid>
                   <Grid item xs={12} lg={6}>
@@ -194,6 +234,8 @@ export function AddApplicationModal({
                             },
                           },
                         }}
+                        {...register('applicationType')}
+                        error={errors.name ? true : false}
                         onChange={(e) => {
                           handleChangeValue({
                             applicationType: e.target.value,
@@ -227,8 +269,8 @@ export function AddApplicationModal({
                       <RadioGroup
                         row
                         aria-labelledby='track-online-btn-group'
-                        name='row-track-online-btn-group'
                         value={inputs.isTracked}
+                        {...register('isTracked')}
                         onChange={(e) => {
                           handleChangeValue({
                             isTracked: e.target.value === 'true',
@@ -255,7 +297,10 @@ export function AddApplicationModal({
                       color='info'
                       fullWidth
                       value={inputs.syncFrequency}
-                      disabled
+                      disabled={!inputs.isTracked}
+                      {...register('syncFrequency')}
+                      error={errors.syncFrequency ? true : false}
+                      helperText={errors.syncFrequency?.message?.toString()}
                       onChange={(e) => {
                         handleChangeValue({
                           syncFrequency: toInteger(e.target.value),
@@ -272,6 +317,9 @@ export function AddApplicationModal({
                       multiline
                       rows={4}
                       value={inputs.description}
+                      {...register('description')}
+                      error={errors.description ? true : false}
+                      helperText={errors.description?.message?.toString()}
                       onChange={(e) => {
                         handleChangeValue({
                           description: e.target.value,
@@ -298,9 +346,7 @@ export function AddApplicationModal({
                     },
                   }}
                   type={'button'}
-                  onClick={() => {
-                    onSubmit();
-                  }}
+                  onClick={handleSubmit(onSubmit)}
                 >
                   Add
                 </Button>
@@ -311,7 +357,7 @@ export function AddApplicationModal({
                   onClick={() => {
                     inputs !== initialInputs
                       ? handleOpenChildModal()
-                      : handleCloseModal();
+                      : handleCloseCurrentModal();
                   }}
                 >
                   Cancel
