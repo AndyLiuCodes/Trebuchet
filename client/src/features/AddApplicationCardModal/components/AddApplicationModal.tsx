@@ -4,7 +4,6 @@ import {
   FormControl,
   InputLabel,
   Modal,
-  Input,
   Typography,
   Divider,
   TextField,
@@ -20,11 +19,11 @@ import {
 import { toInteger } from 'lodash';
 import { Image } from 'mui-image';
 import { useState } from 'react';
-import {
-  useServerApplications,
-  useSetServerApplications,
-} from '@/components/Home/hooks/ServerApplicationsProvider';
-
+import { useServerApplications } from '@/pages/Home/hooks/ServerApplicationsProvider';
+import { ModalApplicationDetails } from '@/types';
+import useApplicationService from '@/hooks/ApplicationService';
+import { applications } from '@/SupportedApplications';
+import { ConfirmationModal } from '@/components/Modals/ConfirmationModal';
 type AddApplicationProps = {
   modalOpen: boolean;
   handleCloseModal: () => void;
@@ -35,14 +34,23 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: '#E5E5CB',
-  border: '2px solid #E5E5CB',
+  bgcolor: 'secondary.main',
+  border: '2px solid secondary.contrastText',
   borderRadius: '8px',
   boxShadow: 24,
   width: '60%',
   pt: 2,
   px: 4,
   pb: 1,
+  overflowY: 'auto',
+  maxHeight: '90%',
+  display: 'block',
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#3c2a21',
+    margin: '10px',
+    borderRadius: '50vw',
+    border: '0.15em solid #1a120b',
+  },
 };
 
 const titleSizes = {
@@ -52,29 +60,14 @@ const titleSizes = {
   xl: 35,
 };
 
-const applications = [
-  {
-    value: 0,
-    label: 'Proxmox',
-  },
-  {
-    value: 1,
-    label: 'Website',
-  },
-  {
-    value: 2,
-    label: 'Custom',
-  },
-];
-
-interface inputsType {
+type inputsType = {
   applicationName: string;
   url: string;
   applicationType: string;
   isTracked: boolean;
   syncFrequency: number;
   description: string;
-}
+};
 
 const initialInputs: inputsType = {
   applicationName: '',
@@ -90,38 +83,47 @@ export function AddApplicationModal({
   handleCloseModal,
 }: AddApplicationProps) {
   const [inputs, setInputs] = useState<inputsType>(initialInputs);
-  const serverApplications = useServerApplications();
-  const setServerApplications = useSetServerApplications();
+  const [childModalOpen, setChildModalOpen] = useState(false);
+  const [serverApplications, setServerApplications] = useServerApplications();
+  const applicationService = useApplicationService();
 
   function handleChangeValue(newValue: any) {
     setInputs({ ...inputs, ...newValue });
   }
 
+  function handleOpenChildModal() {
+    setChildModalOpen(true);
+  }
+
+  function handleCloseChildModal() {
+    setChildModalOpen(false);
+  }
+
+  function handleConfirmation() {
+    setInputs(initialInputs);
+    handleCloseChildModal();
+    handleCloseModal();
+  }
+
   function onSubmit() {
-    const newApplicationDetails = {
+    const newApplicationDetails: ModalApplicationDetails = {
       name: inputs.applicationName,
       description: inputs.description,
-      is_tracked: inputs.isTracked,
-      sync_frequency: inputs.syncFrequency,
-      application_type: inputs.applicationType,
-      server_image: null,
+      isTracked: inputs.isTracked,
+      syncFrequency: inputs.syncFrequency,
+      applicationType: inputs.applicationType,
+      serverImage: null,
       url: inputs.url,
-      is_favourite: false,
+      isFavourite: false,
       position: serverApplications.length,
     };
-    fetch('http://localhost:8080/api/applications/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newApplicationDetails),
-    })
-      .then((res) => res.json())
+    applicationService
+      .addServerApplication(newApplicationDetails)
       .then((res) => {
         setInputs(initialInputs);
         setServerApplications([
           ...serverApplications,
-          { ...newApplicationDetails, id: res.id, date_added: new Date() },
+          { ...newApplicationDetails, id: res.id, dateAdded: new Date() },
         ]);
         handleCloseModal();
       });
@@ -139,19 +141,20 @@ export function AddApplicationModal({
           <Divider />
           <form style={{ marginTop: '15px' }}>
             <Grid container direction='row' spacing={4}>
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={6} lg={4}>
                 <Image
                   src='src/assets/ApplicationLogos/proxmox-logo.png'
                   fit='contain'
                   duration={0}
                 />
               </Grid>
-              <Grid item xs={8}>
+              <Grid item xs={12} sm={6} lg={8}>
                 <Grid container spacing={2}>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} lg={6}>
                     <TextField
                       label='Application Name'
                       fullWidth
+                      color='info'
                       variant='filled'
                       value={inputs.applicationName}
                       onChange={(e) =>
@@ -159,10 +162,11 @@ export function AddApplicationModal({
                       }
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} lg={6}>
                     <TextField
                       label='URL'
                       fullWidth
+                      color='info'
                       variant='filled'
                       value={inputs.url}
                       onChange={(e) =>
@@ -170,15 +174,26 @@ export function AddApplicationModal({
                       }
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} lg={6}>
                     <FormControl fullWidth variant='filled'>
-                      <InputLabel id='application-type-select'>
+                      <InputLabel id='application-type-select' color='info'>
                         Application Type
                       </InputLabel>
                       <Select
                         labelId='application-type-select'
                         label='Application Type'
+                        color='info'
                         value={inputs.applicationType}
+                        inputProps={{
+                          MenuProps: {
+                            MenuListProps: {
+                              sx: {
+                                backgroundColor: 'background.default',
+                                color: 'primary.main',
+                              },
+                            },
+                          },
+                        }}
                         onChange={(e) => {
                           handleChangeValue({
                             applicationType: e.target.value,
@@ -196,11 +211,16 @@ export function AddApplicationModal({
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={6}>
-                    <TextField label='Tags' fullWidth variant='filled' />
+                  <Grid item xs={12} lg={6}>
+                    <TextField
+                      label='Tags'
+                      fullWidth
+                      color='info'
+                      variant='filled'
+                    />
                   </Grid>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant='filled'>
+                  <Grid item xs={12} lg={6}>
+                    <FormControl fullWidth color='info' variant='filled'>
                       <FormLabel id='track-online-btn-group'>
                         Track Online Status
                       </FormLabel>
@@ -217,21 +237,22 @@ export function AddApplicationModal({
                       >
                         <FormControlLabel
                           value={false}
-                          control={<Radio />}
+                          control={<Radio color='info' />}
                           label='Disabled'
                         />
                         <FormControlLabel
                           value={true}
-                          control={<Radio />}
+                          control={<Radio color='info' />}
                           label='Enabled'
                         />
                       </RadioGroup>
                     </FormControl>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} lg={6}>
                     <TextField
                       label='Syncronization Frequency'
                       variant='filled'
+                      color='info'
                       fullWidth
                       value={inputs.syncFrequency}
                       disabled
@@ -247,6 +268,7 @@ export function AddApplicationModal({
                       label='Description'
                       fullWidth
                       variant='filled'
+                      color='info'
                       multiline
                       rows={4}
                       value={inputs.description}
@@ -269,10 +291,10 @@ export function AddApplicationModal({
               <Grid item>
                 <Button
                   sx={{
-                    backgroundColor: '#4C2F21',
-                    color: '#e3f2fd',
+                    backgroundColor: 'background.default',
+                    color: 'primary.main',
                     '&:hover': {
-                      backgroundColor: '#3C2A21',
+                      backgroundColor: 'background.paper',
                     },
                   }}
                   type={'button'}
@@ -284,13 +306,29 @@ export function AddApplicationModal({
                 </Button>
               </Grid>
               <Grid item>
-                {/* Add a confirmation message to indicate that data will be lost */}
-                <Button sx={{ color: '#f44336' }} onClick={handleCloseModal}>
+                <Button
+                  color='error'
+                  onClick={() => {
+                    inputs !== initialInputs
+                      ? handleOpenChildModal()
+                      : handleCloseModal();
+                  }}
+                >
                   Cancel
                 </Button>
               </Grid>
             </Grid>
           </form>
+          <ConfirmationModal
+            modalOpen={childModalOpen}
+            onClose={handleCloseChildModal}
+            onCancel={handleCloseChildModal}
+            onSubmit={handleConfirmation}
+            confirmationMessage={
+              'Your unsaved changes will be discarded. Do you wish to continue?'
+            }
+            submitText={'Confirm'}
+          />
         </Box>
       </Fade>
     </Modal>

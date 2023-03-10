@@ -19,18 +19,21 @@ export const DesktopHeader = ({ pages }: MenuProp) => {
 
   return (
     <>
-      <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+      <AdbIcon
+        color='primary'
+        sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+      />
       <Typography
         variant='h4'
         noWrap
         component='a'
         href='/'
+        color='primary'
         sx={{
           mr: 2,
           display: { xs: 'none', md: 'flex' },
           fontFamily: 'monospace',
           fontWeight: 700,
-          color: 'teal',
           textDecoration: 'none',
         }}
       >
@@ -46,10 +49,11 @@ export const DesktopHeader = ({ pages }: MenuProp) => {
         {pages.map((page) => (
           <Button
             key={page.name}
+            color='primary'
             onClick={() => {
               onNavMenuClick(page.route);
             }}
-            sx={{ my: 2, color: '#E5E5CB', display: 'block' }}
+            sx={{ my: 2, display: 'block' }}
           >
             {page.name}
           </Button>

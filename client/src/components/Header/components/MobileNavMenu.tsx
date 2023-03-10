@@ -36,7 +36,7 @@ export const MobileNavMenu = ({ pages }: MenuProp) => {
         color='inherit'
         sx={{ transform: 'scale(2)' }}
       >
-        <MenuIcon sx={{ color: '#E5E5CB' }} />
+        <MenuIcon color='primary' />
       </IconButton>
       <Menu
         id='menu-appbar'
@@ -54,9 +54,6 @@ export const MobileNavMenu = ({ pages }: MenuProp) => {
         onClose={handleCloseNavMenu}
         sx={{
           display: { xs: 'block', md: 'none' },
-          '& .MuiPaper-root': {
-            backgroundColor: '#1A120B',
-          },
         }}
       >
         {pages.map((page: Page) => (
@@ -66,12 +63,7 @@ export const MobileNavMenu = ({ pages }: MenuProp) => {
               onNavMenuClick(page.route);
             }}
           >
-            <Typography
-              textAlign='center'
-              sx={{
-                color: '#E5E5CB',
-              }}
-            >
+            <Typography textAlign='center' color='primary'>
               {page.name}
             </Typography>
           </MenuItem>

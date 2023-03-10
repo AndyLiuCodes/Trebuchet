@@ -1,9 +1,9 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import apiRouter from './routes/api.js';
-import { closePool } from './utils/db.js';
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const dotenv = require('dotenv');
+const apiRouter = require('./routes/applicationApi');
+const db = require('./db');
 
 const app = express();
 dotenv.config();
@@ -11,6 +11,15 @@ app.use(express.json());
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
+
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log('SUCCESS: Database is synchronized');
+  })
+  .catch((error) => {
+    console.error('ERROR: Failed to syncronized DB - ', error);
+  });
 
 app.use('/api', apiRouter);
 
@@ -20,17 +29,15 @@ const server = app.listen(SERVER_PORT, function () {
   console.log(`Server Port: ${SERVER_PORT}`);
 });
 
-function closeApp() {
-  if (server) {
-    server.close(function (err) {
-      if (err) throw err;
-      console.log('Server closing');
-      closePool(function (err) {
-        if (err) throw err;
-        process.exit();
-      });
-    });
+process.on('exit', function () {
+  if (db && db.sequelize) {
+    db.sequelize.close();
   }
-}
-process.on('SIGTERM', closeApp);
-process.once('SIGINT', closeApp);
+});
+
+process.on('SIGINT', async function () {
+  await db.sequelize.close().then(() => {
+    console.log('Closed DB Connections');
+    process.exit(0);
+  });
+});

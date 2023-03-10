@@ -21,7 +21,7 @@ export const MobileHeader = ({ pages }: MenuProp) => {
           alignItems: 'center',
         }}
       >
-        <AdbIcon sx={{ transform: 'scale(1.8)' }} />
+        <AdbIcon color='primary' sx={{ transform: 'scale(1.8)' }} />
       </Box>
       <MobileNavMenu pages={pages} />
     </Box>
