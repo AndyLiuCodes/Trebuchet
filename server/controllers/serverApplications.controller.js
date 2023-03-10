@@ -11,10 +11,12 @@ exports.create = (req, res) => {
   const isTracked = req.body.isTracked;
   const syncFrequency = req.body.syncFrequency;
   const applicationType = req.body.applicationType;
-  const serverImage = req.body.serverImage;
+  const customImage = req.body.customImage;
   const url = req.body.url;
   const isFavourite = req.body.isFavourite;
   const position = req.body.position;
+  const isCustomImage = req.body.isCustomImage;
+  const imagePath = req.body.imagePath;
 
   if (!name) {
     res.status(422).send('ERROR: name field is empty or invalid');
@@ -34,10 +36,12 @@ exports.create = (req, res) => {
     isTracked: isTracked,
     syncFrequency: syncFrequency,
     applicationType: applicationType,
-    serverImage: serverImage,
+    customImage: customImage,
     url: url,
     isFavourite: isFavourite,
     position: position,
+    isCustomImage: isCustomImage,
+    imagePath: imagePath,
   };
 
   ServerApplication.create(serverApplication)

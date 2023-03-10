@@ -34,7 +34,7 @@ export function GridLayout({ data, action }: GridLayoutProps) {
               id={server.id}
               name={server.name}
               cardState={action}
-              imageName={server.serverImage || 'proxmox-logo.png'}
+              imagePath={server.imagePath || 'proxmox-logo.png'}
               url={server.url}
               description={server.description}
             />

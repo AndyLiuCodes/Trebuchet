@@ -23,9 +23,9 @@ const serverApplication = {
     allowNull: false,
     field: 'application_type',
   },
-  serverImage: {
+  customImage: {
     type: DataTypes.BLOB,
-    field: 'server_image',
+    field: 'custom_image',
   },
   url: {
     type: DataTypes.STRING,
@@ -39,6 +39,14 @@ const serverApplication = {
   position: {
     type: DataTypes.INTEGER,
     allowNull: false,
+  },
+  imagePath: {
+    type: DataTypes.STRING,
+    field: 'image_path',
+  },
+  isCustomImage: {
+    type: DataTypes.BOOLEAN,
+    field: 'is_custom_image',
   },
 };
 

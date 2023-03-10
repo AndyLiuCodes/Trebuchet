@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
 db.sequelize
-  .sync()
+  .sync({ force: 'true' })
   .then(() => {
     console.log('SUCCESS: Database is synchronized');
   })
