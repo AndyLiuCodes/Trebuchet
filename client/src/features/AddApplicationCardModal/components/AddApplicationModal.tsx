@@ -72,6 +72,22 @@ type inputsType = {
   description: string;
 };
 
+const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .required('Application Name cannot be empty.')
+    .max(255, 'Application Name must be less than 255 characters.'),
+  description: Yup.string(),
+  isTracked: Yup.boolean().required('Field cannot be empty.'),
+  syncFrequency: Yup.number(),
+  applicationType: Yup.string().required('Application Type cannot be empty.'),
+  url: Yup.string()
+    .required('URL cannot be empty')
+    .matches(
+      /^(http|https):\/\//,
+      'The URL must being with http:// or https://'
+    ),
+});
+
 const initialInputs: inputsType = {
   applicationName: '',
   url: '',
@@ -89,22 +105,6 @@ export function AddApplicationModal({
   const [childModalOpen, setChildModalOpen] = useState(false);
   const [serverApplications, setServerApplications] = useServerApplications();
   const applicationService = useApplicationService();
-
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .required('Application Name cannot be empty.')
-      .max(255, 'Application Name must be less than 255 characters.'),
-    description: Yup.string(),
-    isTracked: Yup.boolean().required('Field cannot be empty.'),
-    syncFrequency: Yup.number(),
-    applicationType: Yup.string().required('Application Type cannot be empty.'),
-    url: Yup.string()
-      .required('URL cannot be empty')
-      .matches(
-        /^(http|https):\/\//,
-        'The URL must being with http:// or https://'
-      ),
-  });
 
   const {
     register,
