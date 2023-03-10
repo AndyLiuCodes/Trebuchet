@@ -8,6 +8,8 @@ export type ModalApplicationDetails = {
   url: string;
   isFavourite: boolean;
   position: number;
+  isCustomImage: boolean;
+  imagePath: string;
 };
 
 export type ApplicationDetails = {
@@ -22,4 +24,6 @@ export type ApplicationDetails = {
   url: string;
   isFavourite: boolean;
   position: number;
+  isCustomImage: boolean;
+  imagePath: string;
 };

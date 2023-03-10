@@ -4,7 +4,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import { getImage } from '@/features/ContentContainer/utils/ImageHelper';
 import _ from 'lodash';
 import { ActionState } from '@/features/ActionBar';
 import { ApplicationCardActions } from '@/features/ApplicationCard/components/ApplicationCardActions';
@@ -13,7 +12,7 @@ type ApplicationCardProps = {
   id: number;
   name: string;
   cardState: ActionState;
-  imageName: string;
+  imagePath: string;
   url: string;
   description: string;
 };
@@ -37,7 +36,7 @@ export const ApplicationCard = function ({
   id,
   name,
   cardState,
-  imageName,
+  imagePath,
   url,
   description,
 }: ApplicationCardProps) {
@@ -86,15 +85,15 @@ export const ApplicationCard = function ({
       <Box {...cardProps}>
         <CardMedia
           component='img'
-          image={getImage(imageName)}
+          image={imagePath}
           sx={{
             display: 'flex',
             maxWidth: '100%',
-            minWidth: 0,
             flexBasis: 0,
             flexGrow: 1,
-            objectFit: 'cover',
+            objectFit: 'contain',
             height: 'auto',
+            width: 'auto',
           }}
         />
         <Box

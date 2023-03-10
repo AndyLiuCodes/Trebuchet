@@ -6,7 +6,7 @@ import defaultTheme from './themes/default';
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <RouterProvider router={AppRouter} />;
+      <RouterProvider router={AppRouter} />
     </ThemeProvider>
   );
 }

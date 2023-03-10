@@ -15,6 +15,7 @@ import {
   FormControlLabel,
   FormLabel,
   Button,
+  SelectChangeEvent,
 } from '@mui/material';
 import { toInteger } from 'lodash';
 import { Image } from 'mui-image';
@@ -25,8 +26,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useServerApplications } from '@/pages/Home/hooks/ServerApplicationsProvider';
 import { ModalApplicationDetails } from '@/types';
 import useApplicationService from '@/hooks/ApplicationService';
-import { applications } from '@/SupportedApplications';
+import {
+  Applications,
+  Custom,
+  ApplicationOptionType,
+} from '@/utils/SupportedApplications';
 import { ConfirmationModal } from '@/components/Modals/ConfirmationModal';
+
 type AddApplicationProps = {
   modalOpen: boolean;
   handleCloseModal: () => void;
@@ -70,6 +76,8 @@ type inputsType = {
   isTracked: boolean;
   syncFrequency: number;
   description: string;
+  imagePath: string;
+  isCustomImage: boolean;
 };
 
 const validationSchema = Yup.object().shape({
@@ -95,6 +103,8 @@ const initialInputs: inputsType = {
   isTracked: false,
   syncFrequency: 10,
   description: '',
+  imagePath: Custom.imagePath,
+  isCustomImage: false,
 };
 
 export function AddApplicationModal({
@@ -149,6 +159,8 @@ export function AddApplicationModal({
       url: inputs.url,
       isFavourite: false,
       position: serverApplications.length,
+      imagePath: inputs.imagePath,
+      isCustomImage: inputs.isCustomImage,
     };
     applicationService
       .addServerApplication(newApplicationDetails)
@@ -175,12 +187,8 @@ export function AddApplicationModal({
           <Divider />
           <form style={{ marginTop: '15px' }}>
             <Grid container direction='row' spacing={4}>
-              <Grid item xs={12} sm={6} lg={4}>
-                <Image
-                  src='src/assets/ApplicationLogos/proxmox-logo.png'
-                  fit='contain'
-                  duration={0}
-                />
+              <Grid item xs={12} sm={6} lg={4} sx={{ maxHeight: '350px' }}>
+                <Image src={inputs.imagePath} fit='contain' duration={0} />
               </Grid>
               <Grid item xs={12} sm={6} lg={8}>
                 <Grid container spacing={2}>
@@ -237,19 +245,25 @@ export function AddApplicationModal({
                         {...register('applicationType')}
                         error={errors.name ? true : false}
                         onChange={(e) => {
+                          const applicationName = e.target.value;
                           handleChangeValue({
-                            applicationType: e.target.value,
+                            applicationType: applicationName,
+                            imagePath: Applications[applicationName].imagePath,
                           });
                         }}
                       >
-                        {applications.map((application) => (
-                          <MenuItem
-                            key={application.value}
-                            value={application.label}
-                          >
-                            {application.label}
-                          </MenuItem>
-                        ))}
+                        {Object.values(Applications).map(
+                          (application: ApplicationOptionType) => {
+                            return (
+                              <MenuItem
+                                key={application.id}
+                                value={application.label}
+                              >
+                                {application.label}
+                              </MenuItem>
+                            );
+                          }
+                        )}
                       </Select>
                     </FormControl>
                   </Grid>
