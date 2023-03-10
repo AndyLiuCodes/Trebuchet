@@ -1,40 +1,49 @@
-import { Box } from '@mui/material';
-import { ContentContainer } from '@/features/ContentContainer';
-import { ActionBar } from '@/features/ActionBar';
-import { HomeStateProvider, ServerApplicationsProvider } from '@/pages/Home';
 import { useState } from 'react';
+import { Box } from '@mui/material';
+import { ContentContainer, LayoutOptions } from '@/features/ContentContainer';
+import { ActionBar } from '@/features/ActionBar';
+import {
+  HomeStateProvider,
+  ServerApplicationsProvider,
+  ModalOptions,
+} from '@/pages/Home';
 import { AddApplicationModal } from '@/features/AddApplicationCardModal';
 
 export function Home() {
-  const [addModalOpen, setAddModalOpen] = useState(false);
+  const [currentModal, setCurrentModal] = useState<ModalOptions>(
+    ModalOptions.None
+  );
+  const [currentLayout, setCurrentLayout] = useState<LayoutOptions>(
+    LayoutOptions.Grid
+  );
 
   function handleCloseModal() {
-    setAddModalOpen(false);
+    setCurrentModal(ModalOptions.None);
   }
 
-  function handleOpenModal() {
-    setAddModalOpen(true);
+  function handleOpenModal(modal: ModalOptions) {
+    setCurrentModal(modal);
   }
 
   return (
     <ServerApplicationsProvider>
       <HomeStateProvider>
-        <Box>
+        <>
           <Box
             sx={{
               paddingX: 6,
             }}
           >
-            <ContentContainer />
+            <ContentContainer layout={currentLayout} />
             <Box sx={{ position: 'fixed', bottom: 0, right: 0 }}>
-              <ActionBar onAddOpenClick={() => handleOpenModal()} />
+              <ActionBar onOpenModal={handleOpenModal} />
             </Box>
           </Box>
           <AddApplicationModal
-            modalOpen={addModalOpen}
+            modalOpen={currentModal === ModalOptions.AddApplication}
             handleCloseModal={handleCloseModal}
           />
-        </Box>
+        </>
       </HomeStateProvider>
     </ServerApplicationsProvider>
   );

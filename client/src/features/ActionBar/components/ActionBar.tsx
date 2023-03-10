@@ -1,12 +1,12 @@
-import { Box, Grid, Tooltip, Zoom, IconButton } from '@mui/material';
+import { Box, Grid, Tooltip, Zoom, IconButton, styled } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import HomeIcon from '@mui/icons-material/Home';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { ReactElement } from 'react';
-import { useHomeAction, useHomeSetAction } from '@/pages/Home';
 import { ActionState } from '@/features/ActionBar/types/actionStateTypes';
+import { ModalOptions, useHomeAction } from '@/pages/Home';
 
 interface TooltipProps {
   title: string;
@@ -14,8 +14,15 @@ interface TooltipProps {
 }
 
 type ActionBarProps = {
-  onAddOpenClick: () => void;
+  onOpenModal: (modal: ModalOptions) => void;
 };
+
+const StyledIconButton = styled(IconButton)({
+  borderRadius: 0,
+  '&:hover': {
+    backgroundColor: 'secondary.contrastText',
+  },
+});
 
 function CustomTooltip(props: TooltipProps) {
   return (
@@ -30,9 +37,8 @@ function CustomTooltip(props: TooltipProps) {
   );
 }
 
-export function ActionBar({ onAddOpenClick }: ActionBarProps) {
-  const action = useHomeAction();
-  const setAction = useHomeSetAction();
+export function ActionBar({ onOpenModal }: ActionBarProps) {
+  const [action, setAction] = useHomeAction();
 
   function onIconClick(iconAction: ActionState) {
     action === iconAction
@@ -54,88 +60,63 @@ export function ActionBar({ onAddOpenClick }: ActionBarProps) {
       >
         <Grid item>
           <CustomTooltip title='View applications'>
-            <IconButton
+            <StyledIconButton
               sx={{
-                borderRadius: 0,
                 backgroundColor:
                   action === ActionState.Viewing
                     ? 'secondary.contrastText'
                     : '',
-                '&:hover': {
-                  backgroundColor: 'secondary.contrastText',
-                },
               }}
               onClick={() => onIconClick(ActionState.Viewing)}
             >
               <HomeIcon />
-            </IconButton>
+            </StyledIconButton>
           </CustomTooltip>
         </Grid>
         <Grid item>
           <CustomTooltip title='Add new application'>
-            <IconButton
-              sx={{
-                borderRadius: 0,
-                '&:hover': {
-                  backgroundColor: 'secondary.contrastText',
-                },
-              }}
-              onClick={onAddOpenClick}
+            <StyledIconButton
+              onClick={() => onOpenModal(ModalOptions.AddApplication)}
             >
               <AddIcon />
-            </IconButton>
+            </StyledIconButton>
           </CustomTooltip>
         </Grid>
         <Grid item>
           <CustomTooltip title='Edit applications'>
-            <IconButton
+            <StyledIconButton
               sx={{
-                borderRadius: 0,
                 backgroundColor:
                   action === ActionState.Editing
                     ? 'secondary.contrastText'
                     : '',
-                '&:hover': {
-                  backgroundColor: 'secondary.contrastText',
-                },
               }}
               onClick={() => onIconClick(ActionState.Editing)}
             >
               <EditIcon />
-            </IconButton>
+            </StyledIconButton>
           </CustomTooltip>
         </Grid>
         <Grid item>
           <CustomTooltip title='Delete applications'>
-            <IconButton
+            <StyledIconButton
               sx={{
-                borderRadius: 0,
                 backgroundColor:
                   action === ActionState.Deleting
                     ? 'secondary.contrastText'
                     : '',
-                '&:hover': {
-                  backgroundColor: 'secondary.contrastText',
-                },
               }}
               onClick={() => onIconClick(ActionState.Deleting)}
             >
               <DeleteIcon />
-            </IconButton>
+            </StyledIconButton>
           </CustomTooltip>
         </Grid>
         <Grid item>
           <CustomTooltip title='Application list'>
-            <IconButton
-              sx={{
-                borderRadius: 0,
-                '&:hover': {
-                  backgroundColor: 'secondary.contrastText',
-                },
-              }}
-            >
+            <StyledIconButton>
               <FormatListBulletedIcon />
-            </IconButton>
+            </StyledIconButton>
           </CustomTooltip>
         </Grid>
       </Grid>

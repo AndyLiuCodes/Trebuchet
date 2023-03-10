@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Root from '@/routes/root';
-import Error from '@/routes/error';
-import { Home } from '@/pages/Home';
+import { Home, Error } from '@/pages';
 
 export const AppRouter = createBrowserRouter([
   {

@@ -5,12 +5,14 @@ import {
 } from '@/pages/Home';
 import { ApplicationDetails } from '@/types';
 
-export function useServerApplications() {
-  return useContext<ApplicationDetails[]>(ServerApplicationsContext);
-}
-
-export function useSetServerApplications() {
-  return useContext<Dispatch<SetStateAction<ApplicationDetails[]>>>(
-    SetServerApplicationsContext
-  );
+export function useServerApplications(): [
+  ApplicationDetails[],
+  Dispatch<SetStateAction<ApplicationDetails[]>>
+] {
+  return [
+    useContext<ApplicationDetails[]>(ServerApplicationsContext),
+    useContext<Dispatch<SetStateAction<ApplicationDetails[]>>>(
+      SetServerApplicationsContext
+    ),
+  ];
 }

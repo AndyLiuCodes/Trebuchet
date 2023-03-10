@@ -7,14 +7,7 @@ import { styled } from '@mui/material/styles';
 import { getImage } from '@/features/ContentContainer/utils/ImageHelper';
 import _ from 'lodash';
 import { ActionState } from '@/features/ActionBar';
-import { ApplicationCardActions } from '@/features/ContentContainer/components/ApplicationCardActions';
-
-const CardContentNoPadding = styled(CardContent)(`
-  padding: 0;
-  &:last-child {
-    padding-bottom: 0;
-  }
-`);
+import { ApplicationCardActions } from '@/features/ApplicationCard/components/ApplicationCardActions';
 
 type ApplicationCardProps = {
   id: number;
@@ -23,9 +16,21 @@ type ApplicationCardProps = {
   imageName: string;
   url: string;
   description: string;
-  lastSync: number;
-  nextSync: number;
-  handleDelete: () => void;
+};
+
+const CardContentNoPadding = styled(CardContent)(`
+  padding: 0;
+  &:last-child {
+    padding-bottom: 0;
+  }
+`);
+
+const defaultCardProps = {
+  sx: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: '12px',
+  },
 };
 
 export const ApplicationCard = function ({
@@ -35,18 +40,7 @@ export const ApplicationCard = function ({
   imageName,
   url,
   description,
-  lastSync,
-  nextSync,
-  handleDelete,
 }: ApplicationCardProps) {
-  var defaultCardProps = {
-    sx: {
-      display: 'flex',
-      flexDirection: 'row',
-      padding: '12px',
-    },
-  };
-
   // Determine whether the card can be clicked
   var cardProps =
     cardState !== ActionState.Viewing
@@ -60,25 +54,12 @@ export const ApplicationCard = function ({
           },
         });
 
-  const currentTime = Date.now();
-  const onlineStatus = false;
-
   const cardGlow = 'lightgreen';
-  // onlineStatus === OnlineStatus.NotTracked
-  //   ? 'none'
-  //   : isPendingSync === 'SYNCING'
-  //   ? 'yellow'
-  //   : onlineStatus === OnlineStatus.Offline || isPendingSync === 'ERROR'
-  //   ? 'red'
-  //   : 'lightgreen';
-
-  const cardGlowStyle = onlineStatus
-    ? {}
-    : {
-        WebkitBoxShadow: `0 0 10px ${cardGlow}`,
-        MozBoxShadow: `0 0 10px ${cardGlow}`,
-        boxShadow: `0 0 10px ${cardGlow}`,
-      };
+  const cardGlowStyle = {
+    WebkitBoxShadow: `0 0 10px ${cardGlow}`,
+    MozBoxShadow: `0 0 10px ${cardGlow}`,
+    boxShadow: `0 0 10px ${cardGlow}`,
+  };
 
   return (
     <Card
@@ -100,7 +81,6 @@ export const ApplicationCard = function ({
           name={name}
           cardState={cardState}
           description={description}
-          handleDelete={handleDelete}
         />
       </Box>
       <Box {...cardProps}>

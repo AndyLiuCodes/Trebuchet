@@ -2,12 +2,12 @@ import { HomeActionContext, HomeSetActionContext } from '@/pages/Home';
 import { ActionState } from '@/features/ActionBar';
 import { useContext, Dispatch, SetStateAction } from 'react';
 
-export function useHomeAction() {
-  return useContext<ActionState>(HomeActionContext);
-}
-
-export function useHomeSetAction() {
-  return useContext<Dispatch<SetStateAction<ActionState>>>(
-    HomeSetActionContext
-  );
+export function useHomeAction(): [
+  ActionState,
+  Dispatch<SetStateAction<ActionState>>
+] {
+  return [
+    useContext<ActionState>(HomeActionContext),
+    useContext<Dispatch<SetStateAction<ActionState>>>(HomeSetActionContext),
+  ];
 }
